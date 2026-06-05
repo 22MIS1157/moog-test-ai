@@ -1,0 +1,19 @@
+Test_ID,Timestamp,Test_Category,Test_Name,Signal,Measured_Value,Unit,Min_Spec,Max_Spec,Result
+CT-001,2026-05-15 14:30:01,Power,VCC Supply Voltage,VCC_IN,28.05,V,22.0,36.0,PASS
+CT-002,2026-05-15 14:30:05,Power,5V Rail Output,5V_RAIL,4.52,V,4.75,5.25,FAIL
+CT-003,2026-05-15 14:30:08,Power,3.3V Rail Output,3V3_RAIL,3.29,V,3.14,3.47,PASS
+CT-004,2026-05-15 14:30:12,Power,Quiescent Current,IQ,145.2,mA,0,120.0,FAIL
+CT-005,2026-05-15 14:30:20,Functional,PWM Frequency,PWM_A,19.98,kHz,16.0,25.0,PASS
+CT-006,2026-05-15 14:30:25,Functional,PWM Duty Cycle Accuracy,PWM_A,50.1,%,49.0,51.0,PASS
+CT-007,2026-05-15 14:30:30,Functional,Phase A Current,ISENSE_A,9.85,A,0,8.0,FAIL
+CT-008,2026-05-15 14:30:35,Functional,Phase B Current,ISENSE_B,5.10,A,0,8.0,PASS
+CT-009,2026-05-15 14:30:40,Functional,Phase C Current,ISENSE_C,4.92,A,0,8.0,PASS
+CT-010,2026-05-15 14:30:45,Functional,Current Sense Accuracy,ISENSE_A,3.8,%,0,2.0,FAIL
+CT-011,2026-05-15 14:30:50,Communication,SPI Clock Integrity,SPI_CLK,10.0,MHz,0.1,10.0,PASS
+CT-012,2026-05-15 14:30:55,Communication,SPI Register Read,STATUS_REG,0x0043,hex,-,-,FAIL
+CT-013,2026-05-15 14:31:00,Communication,EtherCAT Cycle Time,ECAT,0.995,ms,0.5,1.5,PASS
+CT-014,2026-05-15 14:31:05,Thermal,Board Temperature,TEMP_SENSE,92.5,C,-40,85.0,FAIL
+CT-015,2026-05-15 14:31:10,Protection,ENABLE Response Time,ENABLE,1.9,ms,0,5.0,PASS
+CT-016,2026-05-15 14:31:15,Protection,Soft Start Ramp Time,VCC_RAMP,195,ms,150,250,PASS
+CT-017,2026-05-15 14:31:20,Functional,Output Voltage Swing,PHASE_A+,24.1,V,2.0,26.0,PASS
+CT-018,2026-05-15 14:31:25,Functional,Bandwidth,BW_MEAS,2.45,kHz,2.0,3.0,PASS

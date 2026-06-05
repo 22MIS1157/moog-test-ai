@@ -1,0 +1,33 @@
+[2026-05-16 10:00:01] INFO  Box-level integration test started for Assembly SN: MOOG-SA-4200-BX-0047
+[2026-05-16 10:00:03] INFO  Power-on sequence initiated. VCC = 28.0V applied.
+[2026-05-16 10:00:04] INFO  5V rail stabilized: 5.01V
+[2026-05-16 10:00:04] INFO  3.3V rail stabilized: 3.30V
+[2026-05-16 10:00:05] INFO  MCU boot successful. Firmware v2.4.1 loaded.
+[2026-05-16 10:00:06] INFO  EtherCAT slave initialized. Node address: 0x03
+[2026-05-16 10:00:08] INFO  Functional test suite starting...
+[2026-05-16 10:00:10] PASS  PWM output Phase A: 20.0 kHz, 50.0% duty
+[2026-05-16 10:00:12] PASS  PWM output Phase B: 20.0 kHz, 50.0% duty
+[2026-05-16 10:00:14] PASS  PWM output Phase C: 20.0 kHz, 50.0% duty
+[2026-05-16 10:00:16] PASS  Motor current Phase A: 5.02A (spec: 0-8.0A)
+[2026-05-16 10:00:18] PASS  Motor current Phase B: 4.98A (spec: 0-8.0A)
+[2026-05-16 10:00:20] PASS  Motor current Phase C: 5.01A (spec: 0-8.0A)
+[2026-05-16 10:00:25] INFO  EMC pre-compliance test starting...
+[2026-05-16 10:00:30] INFO  Conducted emissions CE102 scan: 150kHz - 10MHz
+[2026-05-16 10:00:45] WARN  CE102 emission spike detected at 320kHz: 72 dBuV (limit: 70 dBuV)
+[2026-05-16 10:00:46] FAIL  CE102 conducted emissions EXCEEDS limit by 2 dBuV at 320kHz
+[2026-05-16 10:00:50] INFO  Radiated emissions RE102 scan: 10kHz - 18GHz
+[2026-05-16 10:01:15] WARN  RE102 emission detected at 20MHz harmonic: 38 dBuV/m (limit: 40 dBuV/m)
+[2026-05-16 10:01:16] PASS  RE102 radiated emissions within limits (margin: 2 dBuV/m)
+[2026-05-16 10:01:20] INFO  EtherCAT communication stress test (10000 cycles)...
+[2026-05-16 10:02:50] PASS  EtherCAT: 10000/10000 cycles completed. 0 frame errors. Avg cycle time: 0.998ms
+[2026-05-16 10:02:55] INFO  Vibration test per IEC 60068-2-6 starting...
+[2026-05-16 10:05:30] PASS  Vibration test completed. No mechanical failures detected.
+[2026-05-16 10:05:35] INFO  Thermal cycling test (ambient 25C to 85C)...
+[2026-05-16 10:15:00] PASS  Thermal cycle test completed. All signals within spec at 85C.
+[2026-05-16 10:15:05] INFO  === TEST SUMMARY ===
+[2026-05-16 10:15:05] INFO  Total tests: 12
+[2026-05-16 10:15:05] INFO  Passed: 11
+[2026-05-16 10:15:05] INFO  Failed: 1 (CE102 conducted emissions at 320kHz)
+[2026-05-16 10:15:05] INFO  Warnings: 1 (RE102 marginal at 20MHz)
+[2026-05-16 10:15:06] FAIL  OVERALL RESULT: FAIL — EMC non-compliance detected
+[2026-05-16 10:15:06] INFO  Recommended action: Add ferrite bead on VCC input, review PWM switching edge rate
