@@ -1,0 +1,94 @@
+{
+  "design_name": "MOOG-SA-4200 Servo Amplifier Control Card",
+  "revision": "Rev C",
+  "blocks": [
+    {
+      "id": "PWR_REG",
+      "name": "Power Regulator Stage",
+      "type": "power",
+      "components": ["U1_LM5146", "C1_100uF", "C2_100uF", "L1_10uH", "D1_SS36"],
+      "input_voltage": {"min": 22, "max": 36, "unit": "V"},
+      "output_rails": [
+        {"voltage": 5.0, "current_max": 2.0, "unit": "V/A"},
+        {"voltage": 3.3, "current_max": 1.0, "unit": "V/A"}
+      ],
+      "critical_signals": ["VCC_IN", "5V_RAIL", "3V3_RAIL", "PGOOD"]
+    },
+    {
+      "id": "MCU",
+      "name": "Main Microcontroller",
+      "type": "digital",
+      "components": ["U2_STM32F407VG", "Y1_8MHz_XTAL", "C3_22pF", "C4_22pF"],
+      "clock_frequency": 168000000,
+      "interfaces": ["SPI", "EtherCAT", "GPIO", "ADC", "TIMER_PWM"],
+      "critical_signals": ["SPI_CLK", "SPI_MOSI", "SPI_MISO", "SPI_CS", "PWM_A", "PWM_B", "PWM_C", "FAULT_IRQ"]
+    },
+    {
+      "id": "GATE_DRV",
+      "name": "Gate Driver Stage",
+      "type": "analog",
+      "components": ["U3_DRV8353", "C5_1uF", "C6_1uF", "R1_10R_GATE", "R2_10R_GATE", "R3_10R_GATE"],
+      "input_signals": ["PWM_A", "PWM_B", "PWM_C"],
+      "output_signals": ["GATE_AH", "GATE_AL", "GATE_BH", "GATE_BL", "GATE_CH", "GATE_CL"],
+      "critical_signals": ["GATE_AH", "GATE_AL", "GATE_BH", "GATE_BL", "GATE_CH", "GATE_CL"]
+    },
+    {
+      "id": "H_BRIDGE",
+      "name": "H-Bridge Power Stage",
+      "type": "power",
+      "components": ["Q1_IRFP4568", "Q2_IRFP4568", "Q3_IRFP4568", "Q4_IRFP4568", "Q5_IRFP4568", "Q6_IRFP4568"],
+      "mosfet_rdson": 0.0068,
+      "max_current_continuous": 8.0,
+      "max_current_peak": 15.0,
+      "thermal_pad": true,
+      "critical_signals": ["PHASE_A+", "PHASE_A-", "PHASE_B+", "PHASE_B-", "PHASE_C+", "PHASE_C-"]
+    },
+    {
+      "id": "ISENSE",
+      "name": "Current Sensing Stage",
+      "type": "analog",
+      "components": ["U4_INA240", "U5_INA240", "U6_INA240", "R4_5mR_SHUNT", "R5_5mR_SHUNT", "R6_5mR_SHUNT"],
+      "sense_resistor_ohm": 0.005,
+      "gain": 20,
+      "bandwidth": 400000,
+      "adc_resolution": 12,
+      "critical_signals": ["ISENSE_A", "ISENSE_B", "ISENSE_C"]
+    },
+    {
+      "id": "THERMAL",
+      "name": "Thermal Monitoring",
+      "type": "analog",
+      "components": ["RT1_NTC_10K", "R7_10K_PULLUP"],
+      "threshold_warning": 85,
+      "threshold_shutdown": 105,
+      "unit": "C",
+      "critical_signals": ["TEMP_SENSE", "FAULT"]
+    },
+    {
+      "id": "ECAT",
+      "name": "EtherCAT Communication",
+      "type": "digital",
+      "components": ["U7_ET1100", "T1_PULSE_XFMR", "T2_PULSE_XFMR", "RJ45_1", "RJ45_2"],
+      "protocol": "IEC 61158 EtherCAT",
+      "cycle_time_ms": 1,
+      "critical_signals": ["ECAT_TX+", "ECAT_TX-", "ECAT_RX+", "ECAT_RX-"]
+    }
+  ],
+  "net_connections": [
+    {"from": "PWR_REG.5V_RAIL", "to": "MCU.VDD"},
+    {"from": "PWR_REG.3V3_RAIL", "to": "ECAT.VDD_IO"},
+    {"from": "MCU.PWM_A", "to": "GATE_DRV.PWM_A"},
+    {"from": "MCU.PWM_B", "to": "GATE_DRV.PWM_B"},
+    {"from": "MCU.PWM_C", "to": "GATE_DRV.PWM_C"},
+    {"from": "GATE_DRV.GATE_AH", "to": "H_BRIDGE.Q1_GATE"},
+    {"from": "GATE_DRV.GATE_AL", "to": "H_BRIDGE.Q2_GATE"},
+    {"from": "H_BRIDGE.PHASE_A+", "to": "MOTOR.PHASE_A"},
+    {"from": "ISENSE.ISENSE_A", "to": "MCU.ADC_CH0"},
+    {"from": "ISENSE.ISENSE_B", "to": "MCU.ADC_CH1"},
+    {"from": "ISENSE.ISENSE_C", "to": "MCU.ADC_CH2"},
+    {"from": "THERMAL.TEMP_SENSE", "to": "MCU.ADC_CH3"},
+    {"from": "THERMAL.FAULT", "to": "MCU.FAULT_IRQ"},
+    {"from": "MCU.SPI_CLK", "to": "EXTERNAL.SPI_CLK"},
+    {"from": "MCU.ECAT_IF", "to": "ECAT.SPI_BUS"}
+  ]
+}

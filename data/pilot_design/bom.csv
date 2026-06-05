@@ -1,0 +1,35 @@
+Reference,Value,Package,Quantity,Description,Manufacturer,MPN,Category,Critical
+U1,LM5146,HTSSOP-20,1,60V Synchronous Buck Controller,Texas Instruments,LM5146-Q1,Power Regulator,Yes
+U2,STM32F407VG,LQFP-100,1,ARM Cortex-M4 MCU 168MHz,STMicroelectronics,STM32F407VGT6,Microcontroller,Yes
+U3,DRV8353,HTSSOP-48,1,Three-Phase Gate Driver,Texas Instruments,DRV8353RS,Gate Driver,Yes
+U4,INA240,SOT-23-6,1,Current Sense Amplifier Phase A,Texas Instruments,INA240A1,Current Sense,Yes
+U5,INA240,SOT-23-6,1,Current Sense Amplifier Phase B,Texas Instruments,INA240A1,Current Sense,Yes
+U6,INA240,SOT-23-6,1,Current Sense Amplifier Phase C,Texas Instruments,INA240A1,Current Sense,Yes
+U7,ET1100,QFP-144,1,EtherCAT Slave Controller,Beckhoff,ET1100-0000,Communication,Yes
+Q1,IRFP4568,TO-247,1,N-Channel MOSFET Phase A High-Side,Infineon,IRFP4568PBF,Power MOSFET,Yes
+Q2,IRFP4568,TO-247,1,N-Channel MOSFET Phase A Low-Side,Infineon,IRFP4568PBF,Power MOSFET,Yes
+Q3,IRFP4568,TO-247,1,N-Channel MOSFET Phase B High-Side,Infineon,IRFP4568PBF,Power MOSFET,Yes
+Q4,IRFP4568,TO-247,1,N-Channel MOSFET Phase B Low-Side,Infineon,IRFP4568PBF,Power MOSFET,Yes
+Q5,IRFP4568,TO-247,1,N-Channel MOSFET Phase C High-Side,Infineon,IRFP4568PBF,Power MOSFET,Yes
+Q6,IRFP4568,TO-247,1,N-Channel MOSFET Phase C Low-Side,Infineon,IRFP4568PBF,Power MOSFET,Yes
+Y1,8MHz,HC49,1,Crystal Oscillator for MCU,TXC,7B-8.000MAAJ-T,Passive,No
+C1,100uF,Electrolytic,1,Input Bulk Capacitor,Panasonic,EEU-FC1V101,Passive,No
+C2,100uF,Electrolytic,1,Input Bulk Capacitor,Panasonic,EEU-FC1V101,Passive,No
+L1,10uH,Shielded,1,Buck Converter Inductor,Wurth,744770110,Passive,No
+D1,SS36,SMA,1,Schottky Diode,ON Semiconductor,SS36,Passive,No
+R1,10R,0805,1,Gate Resistor Phase A HS,Yageo,RC0805FR-0710RL,Passive,No
+R2,10R,0805,1,Gate Resistor Phase B HS,Yageo,RC0805FR-0710RL,Passive,No
+R3,10R,0805,1,Gate Resistor Phase C HS,Yageo,RC0805FR-0710RL,Passive,No
+R4,5mR,2512,1,Current Shunt Resistor Phase A,Vishay,WSL2512R0050FEA,Current Sense,Yes
+R5,5mR,2512,1,Current Shunt Resistor Phase B,Vishay,WSL2512R0050FEA,Current Sense,Yes
+R6,5mR,2512,1,Current Shunt Resistor Phase C,Vishay,WSL2512R0050FEA,Current Sense,Yes
+R7,10K,0805,1,NTC Pullup Resistor,Yageo,RC0805FR-0710KL,Passive,No
+RT1,10K NTC,0805,1,NTC Thermistor for Thermal Monitoring,Murata,NCP18XH103F03RB,Thermal Sensor,Yes
+T1,Pulse Transformer,SMD,1,EtherCAT Isolation Transformer Port 1,Pulse Electronics,H1102NL,Communication,No
+T2,Pulse Transformer,SMD,1,EtherCAT Isolation Transformer Port 2,Pulse Electronics,H1102NL,Communication,No
+RJ45_1,RJ45,Through-Hole,1,EtherCAT Port 1 Connector,Amphenol,RJHSE5380,Connector,No
+RJ45_2,RJ45,Through-Hole,1,EtherCAT Port 2 Connector,Amphenol,RJHSE5380,Connector,No
+C3,22pF,0402,1,Crystal Load Capacitor,Murata,GRM1555C1H220GA01D,Passive,No
+C4,22pF,0402,1,Crystal Load Capacitor,Murata,GRM1555C1H220GA01D,Passive,No
+C5,1uF,0603,1,Gate Driver Bypass Capacitor,Murata,GRM188R61E105KA12D,Passive,No
+C6,1uF,0603,1,Gate Driver Bypass Capacitor,Murata,GRM188R61E105KA12D,Passive,No
