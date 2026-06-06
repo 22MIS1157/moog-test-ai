@@ -15,6 +15,7 @@ Tools exposed:
 
 import asyncio
 import json
+import logging
 
 from mcp.server import Server
 from mcp.server.stdio import stdio_server
@@ -28,6 +29,8 @@ from src.agents.debug_agent import (
     interactive_debug,
     list_available_test_files,
 )
+
+logger = logging.getLogger("moog_test_ai.mcp")
 
 # Create the MCP server instance
 server = Server("moog-test-ai")
@@ -130,35 +133,43 @@ async def list_tools() -> list[Tool]:
 async def call_tool(name: str, arguments: dict) -> list[TextContent]:
     """Handle tool invocations from MCP clients."""
 
-    if name == "generate_test_plan":
-        design_name = arguments.get("design_name", "MOOG-SA-4200 Servo Amplifier Control Card")
-        focus_areas = arguments.get("focus_areas", "All categories")
-        result = generate_test_plan(design_name=design_name, focus_areas=focus_areas)
+    try:
+        if name == "generate_test_plan":
+            design_name = arguments.get("design_name", "MOOG-SA-4200 Servo Amplifier Control Card")
+            focus_areas = arguments.get("focus_areas", "All categories")
+            result = generate_test_plan(design_name=design_name, focus_areas=focus_areas)
 
-    elif name == "analyze_signals":
-        design_name = arguments.get("design_name", "MOOG-SA-4200 Servo Amplifier Control Card")
-        result = analyze_signals_and_failures(design_name=design_name)
+        elif name == "analyze_signals":
+            design_name = arguments.get("design_name", "MOOG-SA-4200 Servo Amplifier Control Card")
+            result = analyze_signals_and_failures(design_name=design_name)
 
-    elif name == "debug_test_results":
-        filename = arguments.get("filename", "")
-        if not filename:
-            result = "Error: 'filename' parameter is required."
+        elif name == "debug_test_results":
+            filename = arguments.get("filename", "")
+            if not filename:
+                result = "Error: 'filename' parameter is required."
+            else:
+                result = analyze_test_results(filename=filename)
+
+        elif name == "interactive_debug":
+            symptom = arguments.get("symptom", "")
+            if not symptom:
+                result = "Error: 'symptom' parameter is required."
+            else:
+                result = interactive_debug(symptom=symptom)
+
+        elif name == "list_test_files":
+            files = list_available_test_files()
+            result = json.dumps(files, indent=2)
+
         else:
-            result = analyze_test_results(filename=filename)
+            result = f"Error: Unknown tool '{name}'"
 
-    elif name == "interactive_debug":
-        symptom = arguments.get("symptom", "")
-        if not symptom:
-            result = "Error: 'symptom' parameter is required."
-        else:
-            result = interactive_debug(symptom=symptom)
-
-    elif name == "list_test_files":
-        files = list_available_test_files()
-        result = json.dumps(files, indent=2)
-
-    else:
-        result = f"Error: Unknown tool '{name}'"
+    except Exception as e:
+        logger.error(f"Tool '{name}' failed: {e}")
+        result = (
+            f"The AI model is temporarily unavailable. "
+            f"Please retry in a few moments."
+        )
 
     return [TextContent(type="text", text=result)]
 

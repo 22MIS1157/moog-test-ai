@@ -28,7 +28,7 @@ flowchart LR
     end
 
     subgraph LLM["LLM"]
-        D1["Google Gemini 2.0 Flash"]
+        D1["Google Gemini 2.0 Flash Lite"]
     end
 
     subgraph Output["Deliverables"]
@@ -61,7 +61,7 @@ flowchart LR
 | Component | Technology | Why I picked it |
 |---|---|---|
 | Language | Python 3.11+ | Required for the assignment, plus it has the best AI/ML ecosystem |
-| LLM | Google Gemini 2.0 Flash | Free tier, multimodal, good reasoning |
+| LLM | Google Gemini 2.0 Flash Lite | Free tier, multimodal, good reasoning |
 | RAG | LangChain + ChromaDB | Industry standard for document-grounded AI. ChromaDB runs locally so no cloud dependency |
 | Doc Parsing | PyMuPDF + Pandas | Handles PDFs, CSVs, and structured JSON |
 | MCP | mcp Python SDK | Anthropic's official protocol for tool interop |

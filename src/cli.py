@@ -36,6 +36,27 @@ BANNER = """
 """
 
 
+def _handle_llm_error(e: Exception, operation: str) -> None:
+    """Display a clean, user-friendly error message for LLM failures."""
+    err_msg = str(e)
+
+    if "temporarily unavailable" in err_msg.lower() or "high demand" in err_msg.lower():
+        console.print(
+            f"\n[bold yellow]⚠ The AI model is currently busy. "
+            f"Please retry {operation} in a moment.[/]\n"
+        )
+    elif "api key" in err_msg.lower() or "authentication" in err_msg.lower():
+        console.print(
+            f"\n[bold red]✗ API key not configured. "
+            f"Please set GOOGLE_API_KEY in your .env file.[/]\n"
+        )
+    else:
+        console.print(
+            f"\n[bold yellow]⚠ Could not complete {operation} at this time. "
+            f"Please check your network connection and try again.[/]\n"
+        )
+
+
 def show_menu():
     """Display the main menu."""
     table = Table(title="Main Menu", show_header=False, border_style="cyan")
@@ -82,8 +103,7 @@ def cmd_generate_test_plan():
             result = generate_test_plan(design_name=design_name, focus_areas=focus)
         console.print(Panel(Markdown(result), title="Generated Test Plan", border_style="green"))
     except Exception as e:
-        console.print("\n[bold red]Error calling LLM (possibly rate limit / quota exceeded):[/]")
-        console.print(f"[red]{e}[/]\n")
+        _handle_llm_error(e, "test plan generation")
 
 
 def cmd_analyze_signals():
@@ -102,8 +122,7 @@ def cmd_analyze_signals():
             result = analyze_signals_and_failures(design_name=design_name)
         console.print(Panel(Markdown(result), title="Signal & Failure Analysis", border_style="yellow"))
     except Exception as e:
-        console.print("\n[bold red]Error calling LLM (possibly rate limit / quota exceeded):[/]")
-        console.print(f"[red]{e}[/]\n")
+        _handle_llm_error(e, "signal analysis")
 
 
 def cmd_debug_automatic():
@@ -129,8 +148,7 @@ def cmd_debug_automatic():
                 result = analyze_test_results(filename)
             console.print(Panel(Markdown(result), title=f"Debug Report: {filename}", border_style="red"))
         except Exception as e:
-            console.print("\n[bold red]Error calling LLM (possibly rate limit / quota exceeded):[/]")
-            console.print(f"[red]{e}[/]\n")
+            _handle_llm_error(e, "test result analysis")
     else:
         console.print("[red]Invalid selection.[/]")
 
@@ -153,8 +171,7 @@ def cmd_debug_interactive():
             console.print(Panel(Markdown(result), title="Debug Guidance", border_style="magenta"))
             console.print()
         except Exception as e:
-            console.print("\n[bold red]Error calling LLM (possibly rate limit / quota exceeded):[/]")
-            console.print(f"[red]{e}[/]\n")
+            _handle_llm_error(e, "symptom analysis")
 
 
 def cmd_list_files():

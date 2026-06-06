@@ -158,7 +158,7 @@ MoogTestAI uses specialized agents, each with a distinct system prompt and retri
                            ▼
                     ┌──────────────┐
                     │ Gemini 2.0   │
-                    │ Flash LLM    │
+                    │ Flash Lite   │
                     └──────────────┘
 ```
 
@@ -272,7 +272,7 @@ The complete MoogTestAI system follows a layered architecture:
 │                        LLM LAYER                                     │
 │                                                                      │
 │   ┌──────────────────────────────────────────────────────────────┐   │
-│   │  Google Gemini 2.0 Flash                                     │   │
+│   │  Google Gemini 2.0 Flash Lite                                │   │
 │   │  - Temperature: 0.2 (low creativity, high precision)         │   │
 │   │  - Via LangChain ChatGoogleGenerativeAI                      │   │
 │   │  - Fallback: OpenAI GPT-4o (configurable)                   │   │
@@ -292,7 +292,7 @@ Step 1: INGESTION (one-time per design)
 
 Step 2: QUERY (per user request)
   User Query → Embedding → ChromaDB Similarity Search → Top-5 Chunks
-  Top-5 Chunks + System Prompt + User Query → Gemini 2.0 Flash → Response
+  Top-5 Chunks + System Prompt + User Query → Gemini 2.0 Flash Lite → Response
 
 Step 3: OUTPUT
   LLM Response → Structured Parser → Formatted Output (Markdown/JSON)
@@ -448,7 +448,7 @@ Step 3: OUTPUT
 
 | Layer | Technology | Version | Purpose |
 |---|---|---|---|
-| LLM | Google Gemini 2.0 Flash | Latest | Primary language model for generation |
+| LLM | Google Gemini 2.0 Flash Lite | Latest | Primary language model for generation |
 | LLM (alt) | OpenAI GPT-4o | Latest | Alternative LLM provider (configurable) |
 | RAG Framework | LangChain | ≥0.2.0 | Chain orchestration, retrieval, agent management |
 | Vector Store | ChromaDB | ≥0.5.0 | Embedding storage and similarity search |

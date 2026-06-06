@@ -134,12 +134,12 @@ Medium–High (technical capability) but Low (practical deployment). GPT-4o's re
 
 ---
 
-### 2.4 Google Gemini (2.0 Flash)
+### 2.4 Google Gemini (2.0 Flash Lite)
 
 **Category:** Multimodal LLM with Generous Free Tier
 
 **Description:**
-Google Gemini 2.0 Flash is Google's high-performance multimodal model, accessible through the Google AI Studio API. It offers strong reasoning, native PDF processing, image understanding, and a 1M+ token context window. The free tier is remarkably generous — sufficient for R&D prototyping and even moderate production use.
+Google Gemini 2.0 Flash Lite is Google's high-performance multimodal model, accessible through the Google AI Studio API. It offers strong reasoning, native PDF processing, image understanding, and a 1M+ token context window. The free tier is remarkably generous — sufficient for R&D prototyping and even moderate production use.
 
 **Key Capabilities for Testing:**
 - Native PDF processing — can directly ingest datasheets, design specs, and test procedures
@@ -166,7 +166,7 @@ Google Gemini 2.0 Flash is Google's high-performance multimodal model, accessibl
 **Cost:** Free tier (15 RPM, 1M TPM, 1500 RPD). Paid tier: $0.10/1M input tokens, $0.40/1M output tokens — roughly 25x cheaper than GPT-4o.
 
 **Suitability for Moog:**
-High. Gemini 2.0 Flash offers the best cost-to-capability ratio for this project. The free tier alone is sufficient for the pilot phase, and the paid tier is economically viable for production. Its native PDF processing eliminates a significant preprocessing burden. The long context window is particularly valuable for ingesting complete servo amplifier design packages.
+High. Gemini 2.0 Flash Lite offers the best cost-to-capability ratio for this project. The free tier alone is sufficient for the pilot phase, and the paid tier is economically viable for production. Its native PDF processing eliminates a significant preprocessing burden. The long context window is particularly valuable for ingesting complete servo amplifier design packages.
 
 ---
 
@@ -317,7 +317,7 @@ Very Low. Same fundamental limitation as TestRigor — Mabl is a software testin
 | **Flux Copilot** | ◐ Medium | ✗ No | ◐ Schematic only | ◐ Limited | ✗ No | ● On-platform | Low |
 | **GitHub Copilot** | ◔ Low | ✗ No | ✗ No | ✗ Code only | ✗ No | ◐ Cloud | Low |
 | **GPT-4o** | ● High | ● Yes | ● Yes | ● Yes | ◐ Via API | ✗ Cloud only | High |
-| **Gemini 2.0 Flash** | ● High | ● Yes | ● Yes | ● Yes | ◐ Via API | ◐ Cloud (options) | Very Low |
+| **Gemini 2.0 Flash Lite** | ● High | ● Yes | ● Yes | ● Yes | ◐ Via API | ◐ Cloud (options) | Very Low |
 | **LangChain + ChromaDB** | ● High | ● Yes | ● Via LLM | ● Yes | ● Extensible | ● On-premise | Free (OSS) |
 | **MCP** | ● High | ◐ Via tools | ◐ Via tools | ● Yes | ● Designed for it | ● Local | Free (OSS) |
 | **TestRigor** | ✗ None | ✗ No | ◐ UI only | ✗ SW only | ✗ No | ✗ Cloud | High |
@@ -327,7 +327,7 @@ Very Low. Same fundamental limitation as TestRigor — Mabl is a software testin
 
 ## 4. Selected Approach
 
-### Custom RAG Pipeline + MCP Server + Google Gemini 2.0 Flash
+### Custom RAG Pipeline + MCP Server + Google Gemini 2.0 Flash Lite
 
 After evaluating all eight tools, we selected a hybrid architecture that combines three complementary technologies:
 
@@ -345,7 +345,7 @@ After evaluating all eight tools, we selected a hybrid architecture that combine
 │                   RAG Retrieval Chain                     │
 │                            │                             │
 │                            ▼                             │
-│              Google Gemini 2.0 Flash (LLM)               │
+│            Google Gemini 2.0 Flash Lite (LLM)            │
 │                            │                             │
 │              ┌─────────────┼─────────────┐               │
 │              ▼             ▼             ▼               │
@@ -371,7 +371,7 @@ After evaluating all eight tools, we selected a hybrid architecture that combine
 - ChromaDB runs entirely on-premise, ensuring that Moog's intellectual property never leaves the local environment.
 - Persistent: once a design package is ingested, it's available for all future queries without re-processing.
 
-**Why Gemini 2.0 Flash instead of GPT-4o:**
+**Why Gemini 2.0 Flash Lite instead of GPT-4o:**
 - The free tier (15 RPM, 1500 RPD) is sufficient for the entire pilot phase — zero API cost during development.
 - Native PDF processing capability reduces preprocessing complexity.
 - 25x cheaper than GPT-4o at paid tier pricing, making production deployment economically viable.
@@ -405,7 +405,7 @@ After evaluating all eight tools, we selected a hybrid architecture that combine
 
 ## 5. Conclusion
 
-The AI-for-testing landscape is heavily skewed toward software testing tools. For hardware test automation — particularly in the safety-critical aerospace/defense domain — no commercial off-the-shelf tool provides an adequate solution. The combination of a custom RAG pipeline, the MCP integration standard, and a cost-effective multimodal LLM (Gemini 2.0 Flash) offers the most technically sound and practically deployable architecture for Moog's card-level and box-level testing needs.
+The AI-for-testing landscape is heavily skewed toward software testing tools. For hardware test automation — particularly in the safety-critical aerospace/defense domain — no commercial off-the-shelf tool provides an adequate solution. The combination of a custom RAG pipeline, the MCP integration standard, and a cost-effective multimodal LLM (Gemini 2.0 Flash Lite) offers the most technically sound and practically deployable architecture for Moog's card-level and box-level testing needs.
 
 This approach preserves data sovereignty, eliminates vendor lock-in, and provides a modular foundation that can evolve with both Moog's requirements and the rapidly maturing AI ecosystem.
 
