@@ -1,4 +1,5 @@
 # MoogTestAI
+<img width="717" height="602" alt="image" src="https://github.com/user-attachments/assets/894d52a6-cc89-497e-a4d2-da998376922e" />
 
 AI-powered assistant for card-level and box-level hardware testing and debugging. Built as part of the Moog India Technology Center internship assignment.
 
