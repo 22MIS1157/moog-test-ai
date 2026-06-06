@@ -77,10 +77,13 @@ def cmd_generate_test_plan():
         default="All categories (Functional, Boundary, Communication, Environmental, Protection)",
     )
 
-    with console.status("[bold cyan]Generating test plan via LLM..."):
-        result = generate_test_plan(design_name=design_name, focus_areas=focus)
-
-    console.print(Panel(Markdown(result), title="Generated Test Plan", border_style="green"))
+    try:
+        with console.status("[bold cyan]Generating test plan via LLM..."):
+            result = generate_test_plan(design_name=design_name, focus_areas=focus)
+        console.print(Panel(Markdown(result), title="Generated Test Plan", border_style="green"))
+    except Exception as e:
+        console.print("\n[bold red]Error calling LLM (possibly rate limit / quota exceeded):[/]")
+        console.print(f"[red]{e}[/]\n")
 
 
 def cmd_analyze_signals():
@@ -94,10 +97,13 @@ def cmd_analyze_signals():
         default="MOOG-SA-4200 Servo Amplifier Control Card",
     )
 
-    with console.status("[bold cyan]Running FMEA analysis via LLM..."):
-        result = analyze_signals_and_failures(design_name=design_name)
-
-    console.print(Panel(Markdown(result), title="Signal & Failure Analysis", border_style="yellow"))
+    try:
+        with console.status("[bold cyan]Running FMEA analysis via LLM..."):
+            result = analyze_signals_and_failures(design_name=design_name)
+        console.print(Panel(Markdown(result), title="Signal & Failure Analysis", border_style="yellow"))
+    except Exception as e:
+        console.print("\n[bold red]Error calling LLM (possibly rate limit / quota exceeded):[/]")
+        console.print(f"[red]{e}[/]\n")
 
 
 def cmd_debug_automatic():
@@ -118,10 +124,13 @@ def cmd_debug_automatic():
         filename = files[choice - 1]
         console.print(f"\n[bold cyan]Analyzing: {filename}[/]")
 
-        with console.status("[bold cyan]Interpreting test results via LLM..."):
-            result = analyze_test_results(filename)
-
-        console.print(Panel(Markdown(result), title=f"Debug Report: {filename}", border_style="red"))
+        try:
+            with console.status("[bold cyan]Interpreting test results via LLM..."):
+                result = analyze_test_results(filename)
+            console.print(Panel(Markdown(result), title=f"Debug Report: {filename}", border_style="red"))
+        except Exception as e:
+            console.print("\n[bold red]Error calling LLM (possibly rate limit / quota exceeded):[/]")
+            console.print(f"[red]{e}[/]\n")
     else:
         console.print("[red]Invalid selection.[/]")
 
@@ -138,11 +147,14 @@ def cmd_debug_interactive():
         if symptom.lower() in ("exit", "quit", "q"):
             break
 
-        with console.status("[bold cyan]Analyzing symptom..."):
-            result = interactive_debug(symptom)
-
-        console.print(Panel(Markdown(result), title="Debug Guidance", border_style="magenta"))
-        console.print()
+        try:
+            with console.status("[bold cyan]Analyzing symptom..."):
+                result = interactive_debug(symptom)
+            console.print(Panel(Markdown(result), title="Debug Guidance", border_style="magenta"))
+            console.print()
+        except Exception as e:
+            console.print("\n[bold red]Error calling LLM (possibly rate limit / quota exceeded):[/]")
+            console.print(f"[red]{e}[/]\n")
 
 
 def cmd_list_files():
