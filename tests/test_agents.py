@@ -8,10 +8,13 @@ to allow running the test suite without API keys configured.
 import os
 import sys
 from pathlib import Path
-
 import pytest
+from dotenv import load_dotenv
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+# Load environment variables from .env file
+load_dotenv(Path(__file__).resolve().parent.parent / ".env")
 
 HAS_API_KEY = bool(os.getenv("GOOGLE_API_KEY") or os.getenv("OPENAI_API_KEY"))
 
